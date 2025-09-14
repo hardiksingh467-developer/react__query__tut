@@ -1,0 +1,13 @@
+.home__section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  font-size: 30px;
+  color: yellow;
+  background: red;
+  padding: 24px;
+}
+.home__link {
+  cursor: pointer;
+}
