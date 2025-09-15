@@ -11,10 +11,14 @@ const RQSuperHeroesPage = () => {
     return axios.get("http://loalhost:4000/superheroes");
   });
 
-  const { isLoading, data} = response;
+  const { isLoading, data, isError, error } = response;
 
   if(isLoading){
     return <h2>Loading...</h2>
+  }
+
+  if(isError){
+    return <h2>{error.message}</h2>
   }
 
   return (
