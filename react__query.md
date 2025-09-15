@@ -39,6 +39,25 @@ Now if we run npm run server-json, and in our website open http://localhost:4000
 
 # React-Query Begins
 We first need to install react-query package: npm i @tanstack/react-query
-Now we need to import QueryClient and QueryClientProvider in main.jsx, that is, the entry point of our App.
+Now we need to import QueryClient and QueryClientProvider in `main.jsx`, that is, the entry point of our App.
 Create an instance of QueryClient, Wrap <App> with <QueryClientProvider client={queryClientInstance}>
 Now we have access to tanstack query in our entire React App
+
+first import { useQuery } from tanstack query, this hook will be used for all our data fetching needs
+const results = useQuery(key, callback);// this result variable contains nearly all the data which can be overwhelming, hence we would need to destructure it
+hence instead of result we will destructure it to const { isLoading, data} = useQuery();
+In react Query every useQuery hook needs have a unique key
+The second argument is a callback that returns Promise, this callback function will have our API call, that is, our axios implementation; () => { return axios.get()}
+Now we can use result.isLoading to render our Loader and data to map our data
+
+#### Handling Query Error
+Traditionally we will add another useState such as const [error, setError] = useState(null);
+then we catch the error and assign setError(error.message) and render accordingly
+
+but in useQuery hook, similar to isLoading, data, we can also destructure isError and error
+const {isLoading, data, error, isError} = useQuery();
+
+if(isError){
+    return <h2>{error.message}</h2>
+}
+One thing to notice when triggering error through URL change is that the loading state will persist for a longer time as compared to Traditional API call as React-Query automatically does a triple retry when an API fails
