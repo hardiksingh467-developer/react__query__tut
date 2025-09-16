@@ -43,7 +43,7 @@ Now we need to import QueryClient and QueryClientProvider in `main.jsx`, that is
 Create an instance of QueryClient, Wrap <App> with <QueryClientProvider client={queryClientInstance}>
 Now we have access to tanstack query in our entire React App
 
-first import { useQuery } from tanstack query, this hook will be used for all our data fetching needs
+first import { useQuery } from @tanstack/react-query, this hook will be used for all our data fetching needs
 const results = useQuery(key, callback);// this result variable contains nearly all the data which can be overwhelming, hence we would need to destructure it
 hence instead of result we will destructure it to const { isLoading, data} = useQuery();
 In react Query every useQuery hook needs have a unique key
@@ -61,3 +61,12 @@ if(isError){
     return <h2>{error.message}</h2>
 }
 One thing to notice when triggering error through URL change is that the loading state will persist for a longer time as compared to Traditional API call as React-Query automatically does a triple retry when an API fails
+
+Another great thing about React Query is that it comes with dedicated Dev tools
+import { ReactQueryDevtools } from "@tanstack/react-query/devtools" in main.jsx and wrap the imported component After QueryProvider wrapper
+and pass these attributes with there values `initialIsOpen={false} position="bottom-right"`
+
+Now we can see a floating action button in the bottom right of the screen and clicking the button opens the devtools panel, the panel will be empty to begin with, opening a Component with useQuery will show the query keys of the queries being executed, we also get filtering and search to filter out the queries
+Apart from these we have four badges that indicate the status of the query: fresh, fetching, stale, and inactive
+Clicking on the listed, query a panel will open up to the right which will state more details about this query, we can see that there is one observer which is the RQSuperHeroes Page, we also have the time for when the query was last updated at, we also have an actions card which let's us perform actions relate to the query like, refetching, invalidate, reset, remove
+after the action we have the data explorer, this gives you all the information, we will otherwise see in the network tab

@@ -13,7 +13,7 @@ const SuperHeroesPage = () => {
     }).catch((err) => {
       setError(err.message);
       setIsLoading(false);
-    }
+    })
   }, [])
 
   if(isLoading){
