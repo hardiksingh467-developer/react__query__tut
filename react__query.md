@@ -70,3 +70,14 @@ Now we can see a floating action button in the bottom right of the screen and cl
 Apart from these we have four badges that indicate the status of the query: fresh, fetching, stale, and inactive
 Clicking on the listed, query a panel will open up to the right which will state more details about this query, we can see that there is one observer which is the RQSuperHeroes Page, we also have the time for when the query was last updated at, we also have an actions card which let's us perform actions relate to the query like, refetching, invalidate, reset, remove
 after the action we have the data explorer, this gives you all the information, we will otherwise see in the network tab
+
+Query Cache
+It is a feature the library provides out of the box
+In a traditional API call whenever we re-navigate to a Page that makes an API call on page Load, we will see a Loading text again and again as many times as we re-navigate to the page
+But for a React Query page the Caching is done by default and we won't see any Loading text after the first time, as the response gets cached for 5 minutes and React Query relies on that cache for subsequent request.
+So basically the isLoading starts false, then React Query checks if the data is in cache and if it is, is Loading remains false; So now that isLoading can remain false in certain situations one can wonder if there is another flag available to showcase,
+and there is, it is called isFetching, so what isFetching does is that it runs background updates, so isFetching is initially false, but changes to true when we run background refetching, this way the user does not have to see a loading indicator every time the list changes
+So if you load the page for the first time; isLoading: true, isFetching: true then isLoading: false, isFetching: false
+So if you load the page for the second time within cache time; isLoading: false, isFetching: true then isLoading: false, isFetching: false
+We can also custom configure the cache time, to do this we must pass a third argument to useQuery(key, callback, object)
+const { isLoading, data, isError, error, isFetching } = useQuery("key", fetchSuperHeroes, { cacheTime: 5000})// this is 5000 milliseconds

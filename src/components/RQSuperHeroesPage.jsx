@@ -4,12 +4,15 @@ import { useQuery } from "@tanstack/react-query";// useQuery is what we are goin
 import axios from "axios";
 
 const RQSuperHeroesPage = () => {
+  try {
+    
+  
   // useQuery requires at least two arguments,
   // The first argument is a unique key to identify this query
   // The second argument is a callback function that returns a promise
   const response = useQuery('super-heroes', () => {
     return axios.get("http://loalhost:4000/superheroes");
-  });
+  }, { cacheTime: 5000});
 
   const { isLoading, data, isError, error } = response;
 
@@ -26,6 +29,10 @@ const RQSuperHeroesPage = () => {
       <div>RQSuperHeroesPage</div>
     </>
   )
+
+  } catch (error) {
+    console.error("Error is here: ", error);
+  }
 }
 
 export default RQSuperHeroesPage

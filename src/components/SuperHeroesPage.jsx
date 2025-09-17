@@ -7,13 +7,18 @@ const SuperHeroesPage = () => {
   const [error, setError] = useState('');
   
   useEffect(() => {
+    console.log("SuperHeroesPage Mounted");
     axios.get('http://localhost:4000/superheroes').then((res) => {
       setData(res.data);
       setIsLoading(false);
     }).catch((err) => {
       setError(err.message);
       setIsLoading(false);
-    })
+    });
+
+    return () => {
+      console.log("SuperHeroesPage Unmounted");
+    }
   }, [])
 
   if(isLoading){
@@ -27,7 +32,7 @@ const SuperHeroesPage = () => {
   return (
     <div>
       <h2>SuperHeroesPage</h2>
-      {data.map((hero) => {
+      {data?.map((hero) => {
         return <div key={hero?.name}>{hero?.name}</div>
       })}
     </div>
