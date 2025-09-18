@@ -81,3 +81,9 @@ So if you load the page for the first time; isLoading: true, isFetching: true th
 So if you load the page for the second time within cache time; isLoading: false, isFetching: true then isLoading: false, isFetching: false
 We can also custom configure the cache time, to do this we must pass a third argument to useQuery(key, callback, object)
 const { isLoading, data, isError, error, isFetching } = useQuery("key", fetchSuperHeroes, { cacheTime: 5000})// this is 5000 milliseconds
+
+Stale Time:-
+Let's say I as a developer know that the list or the data does not change too often and even if it does it is okay if the user is seeing stale data
+So the thing is the background API call to refetch data in order to change the data without a loader happens once but we might need to update data over a period of time, that is, we might need to treat a data fetched from an API call as Stale Data and refetch over a period of time
+
+const { isLoading, data, isError, error, isFetching } = useQuery("key", fetchSuperHeroes, { cacheTime: 5000, staleTime: 30000})
