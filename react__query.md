@@ -71,7 +71,7 @@ Apart from these we have four badges that indicate the status of the query: fres
 Clicking on the listed, query a panel will open up to the right which will state more details about this query, we can see that there is one observer which is the RQSuperHeroes Page, we also have the time for when the query was last updated at, we also have an actions card which let's us perform actions relate to the query like, refetching, invalidate, reset, remove
 after the action we have the data explorer, this gives you all the information, we will otherwise see in the network tab
 
-Query Cache
+### Query Cache
 It is a feature the library provides out of the box
 In a traditional API call whenever we re-navigate to a Page that makes an API call on page Load, we will see a Loading text again and again as many times as we re-navigate to the page
 But for a React Query page the Caching is done by default and we won't see any Loading text after the first time, as the response gets cached for 5 minutes and React Query relies on that cache for subsequent request.
@@ -82,8 +82,42 @@ So if you load the page for the second time within cache time; isLoading: false,
 We can also custom configure the cache time, to do this we must pass a third argument to useQuery(key, callback, object)
 const { isLoading, data, isError, error, isFetching } = useQuery("key", fetchSuperHeroes, { cacheTime: 5000})// this is 5000 milliseconds
 
-Stale Time:-
+### Stale Time:-
 Let's say I as a developer know that the list or the data does not change too often and even if it does it is okay if the user is seeing stale data
+React Query has default stale time of 0 seconds
 So the thing is the background API call to refetch data in order to change the data without a loader happens once but we might need to update data over a period of time, that is, we might need to treat a data fetched from an API call as Stale Data and refetch over a period of time
 
 const { isLoading, data, isError, error, isFetching } = useQuery("key", fetchSuperHeroes, { cacheTime: 5000, staleTime: 30000})
+
+const { isLoading, data, isError, error, isFetching } = useQuery("keyPassedAsUniqueIdentifierToTheQuery", callback, {cacheTime: 5000, staleTime: 30000, refetchOnMount: true, refetchOnWindowFocus: true}), 
+The `refetchOnMount` is supposed to call the API when component mounts, the values it accepts are: true, false, and "always"(irrespective of whether the data is stale or not it will always fetch data on mount )
+The `refetchOnWindowFocus` is supposed to call the API whenever we open our browser back from minimize or from background, the values it accepts are: true, false, "always"
+
+
+### Polling with React Query
+Polling refers to fetching data over regular intervals
+For example we might want to fetch the stock price every second, the ensures the UI is in sync with the remote data irrespective of configurations like refetchOnMount or refetchOnWindowFocus which is dependent on User Interaction 
+
+const { isLoading, data, isError, error, isFetching } = useQuery("keyPassedAsUniqueIdentifierToTheQuery", callback, {cacheTime: 5000, staleTime: 30000, refetchOnMount: true, refetchOnWindowFocus: true, refetchInterval: false})
+The refetchInterval has the default value of false, however we can set it to a number which will denote milliseconds after which the API will call the data again refetchInterval: 2000,
+the automatic refetching gets paused when the loses focus, to keep refetching even in background we add another property refetchIntervalInBackground: true
+
+So the priority when it comes to refetching data based on all these priorities is
+1. refetchInterval, no matter whether the data is stale or cached, if Polling is enabled, the data will be refetched in that period of time
+2. staleTime: This determines if the refetch can happen on certain events, if(data is stale) refetch ALLOWED! else not ALLOWED
+3. CacheTime: How long should I use the fetched data
+4. Event based: refetchOnWindowFocus(Window Focus), refetchOnReconnect(Network Reconnect), Component Remount, Manual Refetch
+5. Manual Refetch: refetch(), invalidateQueries()
+
+### useQuery on Click
+The GET request is fired as soon as the component mounts or you open a window, however depending on the requirement we might want to fetch the data based on event or user interaction and not when the component mounts
+
+The first step for that is to inform the useQuery hook not to fire the function when the component mounts as that is the default behavior of useQuery hook 
+const { data, isLoading, refetch } = useQuery("key", callback, { enabled: false});
+passing enabled false will prevent the useQuery hook to run on component mount
+
+The second step is to fetch the data on click of the button, useQuery returns a function called refetch to manually trigger the Query
+<button onClick={refetch} >Fetch</button>
+The Query cache and stale time plays the same role, the difference is that the subsequent request will be through button click
+
+### Success and Error Callbacks
