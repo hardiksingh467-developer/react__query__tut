@@ -121,3 +121,35 @@ The second step is to fetch the data on click of the button, useQuery returns a 
 The Query cache and stale time plays the same role, the difference is that the subsequent request will be through button click
 
 ### Success and Error Callbacks
+When we are performing an API call, sometimes we want to produce a side-effect when the query completes, an example would be opening a model, navigating to a different route or even displaying toast notifications, to cater to these scenarios react-query let's us specify, success and error callbacks as configurations or options to the useQuery hook
+
+const onQuerySuccess = (data) => {
+    console.log("Function called after successful query execution ")
+    console.log("Data is ", data)
+}
+
+const onQueryFailure = (error) => {
+    console.log("Function called after successfull query execution ")
+    console.log("Error is ", error);
+}
+
+const { isLoading, data, error, isError} = useQuery("key", callback, {
+    onSuccess: onQuerySuccess
+    onError: onQueryFailure
+});
+
+The useQuery will by default will retry 2 more times, so a total of three times, before calling the onError function
+
+
+### Data Transformation
+Sometimes when data comes from the server we might need to transform data into a format that the frontend can consume, in the Backend we have our own convention and in the frontend we may need our own convention
+To help with such scenarios, React Query provides us with SELECT configuration that we can apply on our useQuery hook
+In other words, instead of getting an array of objects containing id, and name and createdAt and updateAt, what if we only had an array of names
+
+const { isLoading, data } = useQuery("key", apiCallback,, {
+    onSuccess,
+    onError,
+    select: (data) => {
+        const superHeroNames = data.data.map((hero) => {return hero.name})
+    }
+})
