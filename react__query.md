@@ -150,6 +150,17 @@ const { isLoading, data } = useQuery("key", apiCallback,, {
     onSuccess,
     onError,
     select: (data) => {
-        const superHeroNames = data.data.map((hero) => {return hero.name})
+        const superHeroNames = data.data.map((hero) => {return hero.name});
+        return superHeroNames;
     }
-})
+});
+
+
+### Custom Query Hook
+Until now what we learned is great for smaller apps, but now for larger apps we might want to reuse the Data Fetching logic, that is, we might need the same Query Configs for multiple API's
+
+We achieve such flexibility using a custom Query Hook
+First we will create a new file which will contain a custom query hook, in the src folder create a new folder called `hooks`, in that create a file called useSuperHeroesData.js, refer to the useSuperHeroes.js file in hooks folder in src
+
+Now call the hook in place of useQuery
+const { isLoading, isError, error, data } = useSuperHeroesData(onSuccess, onError)
