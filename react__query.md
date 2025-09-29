@@ -166,3 +166,12 @@ Now call the hook in place of useQuery
 const { isLoading, isError, error, data } = useSuperHeroesData(onSuccess, onError)
 
 A hook is nothing but a function
+
+### Query By ID
+What is also common in Data Reading/Fetching is Querying by ID
+We may want details of an individual item
+
+We need to setup an example
+Step 1: Create a new page that will eventually display the details about one single super hero
+Step 2: Configure the route to that page and at the same time add a link from the super heroes list page tob the super hero details page
+Step 3: Fetch a superhero by ID and display the details in the UI
