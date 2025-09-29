@@ -23,3 +23,10 @@ export const useSuperHeroesData = (onSuccess, onError) => {
         }
     })
 }
+/*
+*The above hook is simply a wrapper around the useQuery hook
+we simply return the RHS side of our useQuery code 
+Typically we would have custom onSuccess and onError callbacks, hence we pass them as params in the custom hook
+
+If we replace this hook in our component, one thing we will see right out of the box os that we would have a cleaner component code
+*/

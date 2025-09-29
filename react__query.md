@@ -164,3 +164,5 @@ First we will create a new file which will contain a custom query hook, in the s
 
 Now call the hook in place of useQuery
 const { isLoading, isError, error, data } = useSuperHeroesData(onSuccess, onError)
+
+A hook is nothing but a function
