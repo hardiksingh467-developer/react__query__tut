@@ -17,10 +17,13 @@ export const useSuperHeroesData = (onSuccess, onError) => {
     return useQuery('super-heroes', fetchSuperHeroes, {
         onSuccess,
         onError,
+        // Comment the below key value pair as we do not only need the super hero name
+        /* 
         select: (data) => {
             const superHeroesName = data.data.map((hero) = hero.name);
             return superHeroesName;
         }
+        */
     })
 }
 /*

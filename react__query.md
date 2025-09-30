@@ -175,3 +175,13 @@ We need to setup an example
 Step 1: Create a new page that will eventually display the details about one single super hero
 Step 2: Configure the route to that page and at the same time add a link from the super heroes list page tob the super hero details page
 Step 3: Fetch a superhero by ID and display the details in the UI
+
+So first to accomplish Step 1 create RQSuperHero.js in the components folder
+Now to accomplish Step 2, create a route to this newly created Page, we need a params in that route
+Now to navigate to this route we first need to create some changes in useSuperHero Hook we created earlier, just comment the select key as we do not only need the name of superheroes
+Now wherever we are rendering the super hero names, just use the Link component from react-router-dom package and Navigate on onClick while capturing the ID of super hero
+
+For the accomplishment of Step 3, or the final step we need to catch the ID of the super hero using useParams and make the API call using React Query
+We will create a new custom query hook, so in the hooks folder create a new file, useSuperHeroData.js
+
+### Parallel Queries

@@ -6,6 +6,7 @@ import SuperHeroesPage from "./components/SuperHeroesPage"
 import RQSuperHeroesPage from "./components/RQSuperHeroesPage"
 // import DefaultLayout from "./components/DefaultLayout"
 import "./App.css"
+import RQSuperhero from "./components/RQSuperhero"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/superheroes" element={<SuperHeroesPage />} />
             <Route path="/react-query" element={<RQSuperHeroesPage />} />
+            <Route path="/react-query/:heroId" element={<RQSuperhero />} />
             <Route path="*" element={<HomePage />} />
         </Routes>
       </Router>
