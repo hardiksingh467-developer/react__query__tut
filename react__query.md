@@ -185,3 +185,15 @@ For the accomplishment of Step 3, or the final step we need to catch the ID of t
 We will create a new custom query hook, so in the hooks folder create a new file, useSuperHeroData.js
 
 ### Parallel Queries
+Sometimes a single component may need to call multiple API's to fetch Data
+With React Query it is as simple as calling useQuery twice
+In db.json add another entry called friends, it should be an array of JSON, tha JSON has only `id` and `name`
+
+Now in the components folder create another file called ParallelQueries.jsx
+
+Create a route to render the above page
+
+Now our aim is to fetch both superheroes and friends on this page
+
+### Dynamic Parallel queries
+ 
