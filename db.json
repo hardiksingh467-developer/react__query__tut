@@ -29,5 +29,17 @@
             "id": 3,
             "name": "Ross"
         }
+    ],
+    "users": [
+        {
+            "id": "hardik@example.com",
+            "channelId": "codevolution"
+        }
+    ],
+    "channels": [
+        {
+            "id": "codevolution",
+            "courses": ["expressjs", "nestjs", "springboot"]
+        }
     ]
 }

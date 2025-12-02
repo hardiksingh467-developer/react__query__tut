@@ -196,4 +196,23 @@ Create a route to render the above page
 Now our aim is to fetch both superheroes and friends on this page
 
 ### Dynamic Parallel queries
- 
+
+In the components folder create a new file called DynamicParallel.jsx
+In that we have a function for fetching the Hero details for one single hero by ID
+
+However the component does not fetch details for one hero, It may have to fetch data for multiple heroes
+Hence we specify props in the component called heroIds which is an array of HeroIds
+The Component will not know before hand, how many queries needs to be executed
+Another thing we need to keep in mind is that, if the number of queries that we need to execute changes from render to render, we cannot use Manual Querying, as that would violate the rules of hooks, in other words invoking multiple queries similar to Parallel Queries is not sufficient for Dynamic Parallel Queries
+
+To cater to the specific scenario, React Query provides another hok called `useQueries`
+
+### Dependent Queries
+We might run into scenarios where the queries need to be executed sequentially, that is lets say a certain data has a relation with another set of data, it maybe a One to One relation or a One to Many relation or even a Many to Many relation
+
+For this example we will introduce two more keys in the db.json, users[{id:m string(email), channelId: ref(string)}] and channels[{id: string, courses: []}]
+Let's say based on user.id that is email, we want to fetch their courses
+
+We first need to fetch user 
+
+### Initial Query Data
