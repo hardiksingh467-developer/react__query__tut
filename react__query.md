@@ -216,3 +216,12 @@ Let's say based on user.id that is email, we want to fetch their courses
 We first need to fetch user 
 
 ### Initial Query Data
+If we slow throttle our Network Tab to slow 3G, we can simulate a slow network call
+If we now fetch the data, we can see that it now takes ample amount of time to fetch the data
+If we now go to fetch single data using dynamic query, we will make another API call to fetch that data and the latency still exist,
+We can also use the already fetched data to display here, however we can also not rule out that the initial data may not contain all the required data to show here ,
+What we can do is use the initially fetched list to show the initial data to the dynamic query, what that allows is for React Query to not set a loading state to the details page, only a background prefetch is initiated , and once the details are retrieved they will overwrite any initial data we might have set
+From the user's point of view it would appear as if the data has been fetched instantly
+
+
+### Paginated Queries
